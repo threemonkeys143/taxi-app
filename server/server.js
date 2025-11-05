@@ -32,6 +32,8 @@ app.post("/api/chat", async (req, res) => {
           { role: "user", content: text },
         ],
       }),
+    });
+
     const data = await response.json();
     const message = data?.choices?.[0]?.message?.content || "No response from AI.";
     res.json({ reply: message });
@@ -43,5 +45,3 @@ app.post("/api/chat", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
-
