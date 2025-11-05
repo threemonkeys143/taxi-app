@@ -7,10 +7,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// optional welcome route
+app.get("/", (req, res) => {
+  res.send("🚖 Taxi Server is live and ready!");
+});
+
+// chat route
 app.post("/api/chat", async (req, res) => {
   const { text } = req.body;
   try {
-    const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,15 +31,16 @@ app.post("/api/chat", async (req, res) => {
       }),
     });
 
-    const data = await r.json();
+    const data = await response.json();
     const message = data?.choices?.[0]?.message?.content || "No response from AI.";
     res.json({ reply: message });
   } catch (err) {
-    console.error("Server error:", err);
+    console.error("Error in /api/chat:", err);
     res.status(500).json({ error: "Something went wrong in server." });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
