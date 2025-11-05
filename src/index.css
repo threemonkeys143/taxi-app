@@ -1,5 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* optional custom body style */
 body {
-  margin: 0;
-  font-family: sans-serif;
-  background: #faf6ff;
+  @apply bg-gradient-to-br from-purple-50 via-purple-100 to-pink-50;
+  font-family: 'Inter', sans-serif;
 }
