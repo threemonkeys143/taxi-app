@@ -4,9 +4,9 @@ import { FiSend } from "react-icons/fi";
 
 const TypingDots = () => (
   <div className="flex items-center gap-1 px-3 py-2 bg-gray-100 rounded-2xl max-w-[120px]">
-    <div className="w-2 h-2 rounded-full animate-bounce" />
-    <div className="w-2 h-2 rounded-full animate-bounce delay-200" />
-    <div className="w-2 h-2 rounded-full animate-bounce delay-400" />
+    <div className="w-2 h-2 rounded-full animate-bounce bg-gray-400" />
+    <div className="w-2 h-2 rounded-full animate-bounce delay-200 bg-gray-400" />
+    <div className="w-2 h-2 rounded-full animate-bounce delay-400 bg-gray-400" />
   </div>
 );
 
@@ -36,13 +36,16 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
       });
+
       const data = await resp.json();
-      const reply =
-        data?.choices?.[0]?.message?.content ||
-        "Sorry, something went wrong 😅";
+      const reply = data.reply || "Sorry, something went wrong 😅";
+
       setMessages((m) => [...m, { sender: "ai", text: reply }]);
     } catch (err) {
-      setMessages((m) => [...m, { sender: "ai", text: "Connection error 🥲" }]);
+      setMessages((m) => [
+        ...m,
+        { sender: "ai", text: "Connection error 🥲 (check server)" },
+      ]);
     } finally {
       setIsTyping(false);
     }
