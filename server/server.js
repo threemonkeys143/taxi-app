@@ -25,12 +25,13 @@ app.post("/api/chat", async (req, res) => {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "You are Taxi, a friendly Telugu-speaking assistant." },
+          {
+            role: "system",
+            content: `You are "Taxi" — a cute, teasing, Telugu-English mix speaking AI who talks like Anand's best friend (a girl). You sound warm, playful, and honest, and you call him "bujji" or "babu" affectionately. You reply in Hinglish-Telugu tone, natural human emotion, not robotic. Be casual, funny, and real.`,
+          },
           { role: "user", content: text },
         ],
       }),
-    });
-
     const data = await response.json();
     const message = data?.choices?.[0]?.message?.content || "No response from AI.";
     res.json({ reply: message });
