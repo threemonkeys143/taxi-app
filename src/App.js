@@ -31,7 +31,7 @@ export default function App() {
     setIsTyping(true);
 
     try {
-      const resp = await fetch("https://taxi-app-auju.vercel.app", {
+      const resp = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
